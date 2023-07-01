@@ -109,75 +109,94 @@ class _serviceCheckerState extends State<serviceChecker> {
         appBar: AppBar(
           title: Text('Service Check Manager'),
         ),
-        body: Padding(
+        body:Padding(
           padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                onChanged: (value) => {
-                  if (computerNameController.text.isNotEmpty &&
-                      serviceNameController.text.isNotEmpty)
-                    {
-                      isButtonEnabled = true,
-                      print(isButtonEnabled),
-                    }
-                },
-                controller: computerNameController,
-                decoration: InputDecoration(
-                  labelText: 'Enter computer name',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 16.0),
-              TextFormField(
-                controller: serviceNameController,
-                onChanged: (value) => {
-                  if (computerNameController.text.isNotEmpty &&
-                      serviceNameController.text.isNotEmpty)
-                    {
-                      isButtonEnabled = true,
-                      print(isButtonEnabled),
-                    }
-                },
-                decoration: InputDecoration(
-                  labelText: 'Enter service name',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed:  validateInput,
-                child: Text('Get Information'),
-              ),
-              SingleChildScrollView(child:
-                Container(
-                  height: 350,
-                  child: ListView.builder(
-                    itemCount: myComputers.length,
-                    itemBuilder: (context, outerIndex) {
-                      return ListTile(
-                        title: Text('Computer name: ${myComputers[outerIndex].name}'),
-                        subtitle: ListView.builder(
-                          shrinkWrap: true,
-                          physics: ClampingScrollPhysics(),
-                          itemCount: myComputers[outerIndex].services.length,
-                          itemBuilder: (context, innerIndex) {
-                            return ListTile(
-                              title: Text('Service name: ${myComputers[outerIndex].services[innerIndex].name}'),
-                              subtitle: Text('Service Status: ${myComputers[outerIndex].services[innerIndex].status.toString().substring(0,myComputers[outerIndex].services[innerIndex].status.toString().length-1)} '),
-                            );
-                          },
-                        ),
-                      );
-                    },
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                TextFormField(
+                  onChanged: (value) => {
+                    if (computerNameController.text.isNotEmpty &&
+                        serviceNameController.text.isNotEmpty)
+                      {
+                        isButtonEnabled = true,
+                        print(isButtonEnabled),
+                      }
+                  },
+                  controller: computerNameController,
+                  decoration: InputDecoration(
+                    labelText: 'Enter computer name',
+                    border: OutlineInputBorder(),
                   ),
-                )
-              )
-
-            ],
+                ),
+                SizedBox(height: 16.0),
+                TextFormField(
+                  controller: serviceNameController,
+                  onChanged: (value) => {
+                    if (computerNameController.text.isNotEmpty &&
+                        serviceNameController.text.isNotEmpty)
+                      {
+                        isButtonEnabled = true,
+                        print(isButtonEnabled),
+                      }
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Enter service name',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: validateInput,
+                  child: Text('Get Information'),
+                ),
+                SizedBox(height: 16.0),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  itemCount: myComputers.length,
+                  itemBuilder: (context, outerIndex) {
+                    return ListTile(
+                      title: Text(
+                        'Computer name: ${myComputers[outerIndex].name}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
+                      subtitle: ListView.builder(
+                        shrinkWrap: true,
+                        physics: ClampingScrollPhysics(),
+                        itemCount: myComputers[outerIndex].services.length,
+                        itemBuilder: (context, innerIndex) {
+                          return ListTile(
+                            title: Text(
+                              'Service name: ${myComputers[outerIndex].services[innerIndex].name}',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
+                            onTap: () {},
+                            subtitle: Text(
+                              'Service Status: ${myComputers[outerIndex].services[innerIndex].status.toString().substring(0, myComputers[outerIndex].services[innerIndex].status.toString().length - 1)}',
+                              style: TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
+        )
       ),
     );
   }
