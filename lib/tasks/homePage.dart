@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:my_wallet/client/base_client.dart';
 import 'dart:convert';
 import 'package:my_wallet/tasks/ServiceCheck.dart';
+import 'package:my_wallet/tasks/serviceControlMng.dart';
 
 class requestSender extends StatefulWidget {
   const requestSender({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _requestSenderState extends State<requestSender> {
   final String serverUrl = 'http://192.168.56.1:8090'; // Replace with your server URL
 
   // Future<void> sendHttpRequest(String compterNames,String serviceNames) async {
-  //   final url = Uri.parse('$serverUrl/Philips/IBE/HealthCheck?IP=$compterNames&Services=$serviceNames'); // Replace with your desired endpoint
+  //   final url = Uri.parse('$serverUrl/Philips/IBE/ServiceControl?IP=MSI,DESKTOP-UQR19D0&Services=wuauserv,Spooler'); // Replace with your desired endpoint
   //
   //   final response = await http.get(url);
   //
@@ -37,36 +38,10 @@ class _requestSenderState extends State<requestSender> {
   //       }
   //     }
   //     String jsonString =JsonEncoded;
+  //     print(jsonString);
   //         //'{"MSI": ["@{ServiceName=wuauserv; Status=Running}","@{ServiceName=Spooler; Status=Running}"],"Dell": ["@{ServiceName=wuauserv; Status=Running}","@{ServiceName=Spooler; Status=Running}"]}';
   //
-  //     Map<String, dynamic> jsonData = json.decode(jsonString);
   //
-  //     List<Computer> computers = [];
-  //
-  //     jsonData.forEach((computerName, services) {
-  //       List<Service> parsedServices = [];
-  //
-  //       services.forEach((serviceString) {
-  //         String serviceName = serviceString.split(';')[0].split('=')[1].trim();
-  //         String serviceStatus = serviceString.split(';')[1].split('=')[1].trim();
-  //
-  //         parsedServices.add(Service(serviceName, serviceStatus));
-  //       });
-  //
-  //       computers.add(Computer(computerName, parsedServices));
-  //     });
-  //
-  //     print('Number of computers: ${computers.length}');
-  //     print('');
-  //
-  //     computers.forEach((computer) {
-  //       print('Computer name: ${computer.name}');
-  //       computer.services.forEach((service) {
-  //         print('Service name: ${service.name}');
-  //         print('Service status: ${service.status.substring(0,service.status.length-1)}');
-  //         print('');
-  //       });
-  //     });
   //
   //
   // } else {
@@ -124,6 +99,9 @@ class _requestSenderState extends State<requestSender> {
         onPressed: (){
         if(label == "Service Check"){
           Navigator.push(context, MaterialPageRoute( builder: (context) =>const serviceChecker()));
+        }
+        else if (label == "Service Control"){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const serviceController(),));
 
         }
         },

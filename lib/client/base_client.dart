@@ -32,3 +32,12 @@ class Service {
   Service(this.name, this.status);
 }
 
+class serviceControl{
+
+  String name;
+  String service;
+  String status;
+  String action;
+
+  serviceControl(this.name,this.service,this.status,this.action);
+}
