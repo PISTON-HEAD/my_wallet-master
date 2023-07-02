@@ -196,14 +196,14 @@ class _serviceControllerState extends State<serviceController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                            'Computer name: ${controlManager[index].name}'),
+                            'Computer name: ${controlManager[index].name}',style: TextStyle(fontSize: 17,fontWeight: FontWeight.w700),),
                         SizedBox(height: 8.0),
                         Text(
-                            'Service Name: ${controlManager[index].service}'),
+                            'Service Name: ${controlManager[index].service}',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500)),
                         SizedBox(height: 8.0),
-                        Text('Status: ${controlManager[index].status}'),
+                        Text('Status: ${controlManager[index].status}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500)),
                         SizedBox(height: 8.0),
-                        Text('Action: ${controlManager[index].action}'),
+                        Text('Action: ${controlManager[index].action}',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w500)),
                         SizedBox(height: 16.0),
                         Divider(thickness: 1.5,),
                         SizedBox(height: 16.0),
