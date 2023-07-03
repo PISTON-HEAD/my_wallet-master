@@ -69,12 +69,41 @@ class _diskUtilizationState extends State<diskUtilization> {
             allValues.add(value.toString());
           }
         });
-        print(allValues);
         for(int i =0;i<allValues.length/3;i++){
           remoteComputers.add(DiskAndCPU(allValues[0+i], allValues[1+i], allValues[2+i],));
         }
-
         DiskManager = remoteComputers;
+        DiskManager.forEach((computer) {
+          print('Computer name: ${computer.name}');
+          print('Disk: ${computer.Disk}');
+          print('CPU: ${computer.CPU}');
+        });
+      }else{
+        List<DiskAndCPU> remoteComputer = [];
+        String computerName="", Disk="", CPU="";
+        List allValues = [];
+        for(int i = 0;i<jsonData.length;i++){
+          jsonData[i].forEach((key, value) {
+            print(key.toString()+"   " +value.toString());
+            if(key == "ComputerName"){
+              computerName = value;
+              allValues.add(value.toString());
+            }else if( key == "Disk" || key == "DiskUsage"){
+              Disk = value.toString();
+              allValues.add(value.toString());
+            }
+            else if(key =="CPU" || key =="CPUusage"){
+              CPU = value.toString();
+              allValues.add(value.toString());
+            }
+          });
+
+        }
+        print(allValues);
+        for(int i =0;i<allValues.length;i+=3){
+          remoteComputer.add(DiskAndCPU(allValues[0+i], allValues[1+i], allValues[2+i],));
+        }
+        DiskManager = remoteComputer;
         DiskManager.forEach((computer) {
           print('Computer name: ${computer.name}');
           print('Disk: ${computer.Disk}');
@@ -125,18 +154,20 @@ class _diskUtilizationState extends State<diskUtilization> {
               SizedBox(height: 16.0),
               Expanded(
                 child: ListView.builder(
-                  itemCount: 0,
+                  itemCount: DiskManager.length,
                   itemBuilder: (context, index) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children:  [
                         Text(
-                          'Computer name:',style: TextStyle(fontSize: 17,fontWeight: FontWeight.w700),),
+                          'Computer name: ${DiskManager[index].name}',style: TextStyle(fontSize: 17,fontWeight: FontWeight.w700),),
                         SizedBox(height: 8.0),
-                        Text(
-                            'Disk Utilization: ',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500)),
+                        Text(DiskManager[index].CPU.length>5?'Disk Utilization: ${DiskManager[index].CPU}':
+                            'Disk Utilization: ${DiskManager[index].CPU}%',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500)),
                         SizedBox(height: 8.0),
-
+                        Text(DiskManager[index].CPU.length>5?'CPU Utilization: ${DiskManager[index].Disk}':
+                        'CPU Utilization: ${DiskManager[index].Disk}%',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w500)),
+                        SizedBox(height: 8.0),
                         Divider(thickness: 1.5,),
                         SizedBox(height: 16.0),
                       ],
