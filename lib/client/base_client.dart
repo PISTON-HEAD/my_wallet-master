@@ -41,3 +41,11 @@ class serviceControl{
 
   serviceControl(this.name,this.service,this.status,this.action);
 }
+
+class DiskAndCPU{
+  String name;
+  String Disk;
+  String CPU;
+
+  DiskAndCPU(this.name,this.Disk,this.CPU);
+}

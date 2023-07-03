@@ -2,6 +2,8 @@ import 'package:flutter/material.dart' show AppBar, BuildContext, Column, CrossA
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:my_wallet/client/base_client.dart';
+
 class diskUtilization extends StatefulWidget {
   const diskUtilization({Key? key}) : super(key: key);
 
@@ -27,11 +29,11 @@ class _diskUtilizationState extends State<diskUtilization> {
     }
   }
 
+  var DiskManager = [];
   Future<void> sendHttpRequest(String compterNames) async {
     final url = Uri.parse('$serverUrl/Philips/IBE/DiskUtilization?IP=$compterNames'); // Replace with your desired endpoint
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      print('Response body: ${response.body}');
       String input =response.body.toString();
       // Remove newlines and whitespace
       String JsonEncoded = "";
@@ -47,7 +49,39 @@ class _diskUtilizationState extends State<diskUtilization> {
       }
       String jsonString =JsonEncoded;
       var jsonData = json.decode(jsonString);
-      print(jsonData);
+      print(jsonData.runtimeType);
+      if(jsonData.runtimeType.toString() == "_InternalLinkedHashMap<String, dynamic>"){
+        Map<String, dynamic> jsonData = json.decode(jsonString);
+        List<DiskAndCPU> remoteComputers = [];
+        String computerName="", Disk="", CPU="";
+        List allValues = [];
+        jsonData.forEach((key, value) {
+          print(key.toString()+"   " +value.toString());
+          if(key == "ComputerName"){
+            computerName = value;
+            allValues.add(value.toString());
+          }else if( key == "DiskUsage"){
+            Disk = value.toString();
+            allValues.add(value.toString());
+          }
+          else if(key =="CPUusage"){
+            CPU = value.toString();
+            allValues.add(value.toString());
+          }
+        });
+        print(allValues);
+        for(int i =0;i<allValues.length/3;i++){
+          remoteComputers.add(DiskAndCPU(allValues[0+i], allValues[1+i], allValues[2+i],));
+        }
+
+        DiskManager = remoteComputers;
+        DiskManager.forEach((computer) {
+          print('Computer name: ${computer.name}');
+          print('Disk: ${computer.Disk}');
+          print('CPU: ${computer.CPU}');
+        });
+      }
+      setState(() { });
     } else {
       print('Request failed with status code: ${response.statusCode}');
     }
