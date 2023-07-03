@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:my_wallet/client/base_client.dart';
 import 'dart:convert';
 import 'package:my_wallet/tasks/ServiceCheck.dart';
+import 'package:my_wallet/tasks/diskUtil.dart';
 import 'package:my_wallet/tasks/serviceControlMng.dart';
 
 class requestSender extends StatefulWidget {
@@ -102,7 +103,9 @@ class _requestSenderState extends State<requestSender> {
         }
         else if (label == "Service Control"){
           Navigator.push(context, MaterialPageRoute(builder: (context) => const serviceController(),));
-
+        }
+        else if(label == "Disk Utilization"){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => const diskUtilization(),));
         }
         },
         child: Column(
